@@ -240,10 +240,15 @@ show(50);
 show(100);
 show(200);
 
-// 許容錯乱円を1pxのサイズとしたとき、1000mm 先にピントをあわせたときの前後
-console.log(model.sensorSize.width / model.pixels.width);
-console.log(libphoto.hyperfocalDistanceByCircle(50, 8, (model.sensorSize.width / model.pixels.width)) / 1000, 'm');
-console.log(libphoto.depthOfField(4870, 50, 8, (model.sensorSize.width / model.pixels.width)).map(function (n) { return n / 1000 }), 'm');
+var circle      = model.sensorSize.width / model.pixels.width;
+var focalLength = 35;
+var fNumber     = 8;
+var distance    = 23.8875  * 1000;
+console.log(circle);
+console.log(libphoto.hyperfocalDistanceByCircle(focalLength, fNumber, (model.sensorSize.width / model.pixels.width)) / 1000, 'm');
+var depthOfField = libphoto.depthOfField(distance, focalLength, fNumber, (model.sensorSize.width / model.pixels.width));
+console.log(depthOfField.map(function (n) { return n / 1000 }), 'm');
+console.log(depthOfField[0] - distance, depthOfField[1] - distance, 'mm');
 
 /*
 
