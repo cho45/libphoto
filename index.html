@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<link rev="made" href="mailto:cho45@lowreal.net"/>
+		<link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="/assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+
+		<script type="text/javascript" src="/assets/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/assets/js/micro-template.js"></script>
+		<script type="text/javascript" src="/lib/libphoto.js"></script>
+		<script type="text/javascript" src="/assets/js/assets.js"></script>
+
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<style>
+			body {
+				padding: 20px 0 0 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!--
+			<div class="input-prepend">
+				<span class="add-on">F</span><input class="span1" id="f-number" size="16" type="text" placeholder="2.8">
+			</div>
+			<div class="input-append">
+				<input class="span1" id="focal-length" size="16" type="text" placeholder="50"><span class="add-on">mm</span>
+			</div>
+			-->
+
+			<script type="application/x-template" id="models">
+				<select>
+					<% for (var i = 0, it; (it = makers[i]); i++) { %>
+					<optgroup label="<%= it.name %>">
+						<% for (var j = 0, model; (model = it.models[j]); j++) { %>
+						<option value="<%= model.name %>"><%= model.name %></option>
+						<% } %>
+					<% } %>
+					</optgroup>
+				</select>
+			</script>
+
+			<table class="table table-striped" style="width: 500px">
+				<tr>
+					<th>Sensor</th>
+					<td id="spec-sensor"></td>
+				</tr>
+				<tr>
+					<th>Pixels</th>
+					<td id="spec-pixels"></td>
+				</tr>
+				<tr>
+					<th>Nyquist Frequency</th>
+					<td id="spec-nyquist-frequency"></td>
+				</tr>
+				<tr>
+					<th>Minimum speed for negligible jingle</th>
+					<td id="spec-minimun-speed"></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

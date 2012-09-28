@@ -1,0 +1,206 @@
+[
+    {
+        "name": "EOS 1D X",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 36,
+            "height": 24
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "EOS 5D Mark III",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 36,
+            "height": 24
+        },
+        "pixels": {
+            "width": 5760,
+            "height": 3840
+        }
+    },
+    {
+        "name": "EOS 5D Mark II",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 36,
+            "height": 24
+        },
+        "pixels": {
+            "width": 5616,
+            "height": 3744
+        }
+    },
+    {
+        "name": "EOS 6D",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 35.8,
+            "height": 23.9
+        },
+        "pixels": {
+            "width": 5472,
+            "height": 3648
+        }
+    },
+    {
+        "name": "EOS 7D",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "EOS 60D",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "EOS X6i",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "EOS X5",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "EOS X50",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22,
+            "height": 14.7
+        },
+        "pixels": {
+            "width": 4272,
+            "height": 2848
+        }
+    },
+    {
+        "name": "EOS M",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixels": {
+            "width": 5184,
+            "height": 3456
+        }
+    },
+    {
+        "name": "D4",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 36,
+            "height": 23.9
+        },
+        "pixels": {
+            "width": 4928,
+            "height": 3280
+        }
+    },
+    {
+        "name": "D800",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24
+        },
+        "pixels": {
+            "width": 7360,
+            "height": 4912
+        }
+    },
+    {
+        "name": "D600",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24
+        },
+        "pixels": {
+            "width": 6016,
+            "height": 4016
+        }
+    },
+    {
+        "name": "D7000",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.6,
+            "height": 15.6
+        },
+        "pixels": {
+            "width": 4928,
+            "height": 3264
+        }
+    },
+    {
+        "maker": "Nikon",
+        "name": "D5100",
+        "sensorSize": {
+            "width": 23.6,
+            "height": 15.6
+        },
+        "pixels": {
+            "width": 4928,
+            "height": 3264
+        }
+    },
+    {
+        "maker": "Nikon",
+        "name": "D3200",
+        "sensorSize": {
+            "width": 23.2,
+            "height": 15.4
+        },
+        "pixels": {
+            "width": 6016,
+            "height": 4000
+        }
+    },
+    {
+        "maker": "Nikon",
+        "name": "D3100",
+        "sensorSize": {
+            "width": 23.1,
+            "height": 15.4
+        },
+        "pixels": {
+            "width": 4608,
+            "height": 3072
+        }
+    }
+]

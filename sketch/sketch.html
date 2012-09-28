@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<script type="text/javascript" src="/assets/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/assets/js/micro-template.js"></script>
+		<script type="text/javascript" src="/lib/libphoto.js"></script>
+		<script type="text/javascript" src="/assets/js/assets.js"></script>
+		<script type="text/javascript">
+$(function () {
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+
+	canvas.width = document.body.offsetWidth;
+	canvas.height = document.body.offsetHeight;
+	ctx.translate(canvas.width / 2, canvas.height);
+	var mm = function (n) { return n / 50 };
+
+	function initCanvas () {
+		ctx.clearRect(-canvas.width / 2, -canvas.height, canvas.width, canvas.height);
+		ctx.fillStyle = '#333';
+		ctx.beginPath();
+		ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+		ctx.fill();
+
+		ctx.strokeStyle = "#ccc";
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.lineTo(0, -canvas.height);
+		ctx.moveTo(mm(-2000), 0);
+		ctx.lineTo(mm(-2000), -canvas.height);
+		ctx.moveTo(mm(2000), 0);
+		ctx.lineTo(mm(2000), -canvas.height);
+		ctx.stroke();
+
+
+		for (var i = 0; i < 100; i++) {
+			ctx.lineWidth = i % 10 === 0 ? 2 : 1;
+			ctx.beginPath();
+			ctx.moveTo(-(canvas.width / 2), -mm(1000) * i);
+			ctx.lineTo(canvas.width, -mm(1000) * i);
+			ctx.stroke();
+		}
+	}
+
+	var f = 50;
+
+	function drawAngleOfView () {
+		ctx.strokeStyle = "#333";
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.lineTo(Math.tan(angleOfView(36, f) / 2) * canvas.height, -canvas.height);
+		ctx.moveTo(0, 0);
+		ctx.lineTo(Math.tan(angleOfView(36, f) / 2) * -canvas.height, -canvas.height);
+		ctx.stroke();
+		$('#f-input label').text(f + 'mm (' + radiansToDegree(angleOfView(36, f)).toFixed(1) + '°)');
+	}
+
+	function drawFinder () {
+		ctx.save();
+
+		ctx.translate(-canvas.width / 2 + 10, -10);
+		ctx.scale(10, 10);
+		ctx.translate(0, -24);
+
+		ctx.strokeStyle = '#333';
+		ctx.strokeRect(0, 0, 36, 24);
+		ctx.fillStyle = '#fff';
+		ctx.fillRect(0, 0, 36, 24);
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.lineTo(36, 0);
+		ctx.lineTo(36, 24);
+		ctx.lineTo(0, 24);
+		ctx.lineTo(0, 0);
+		ctx.clip();
+
+		var drawObject = function (distance, objectWidth, objectHeight, objectOffsetLeft, objectOffsetTop) {
+			var fullWidth  = sizeByDistanceAndAngle(distance, angleOfView(36, f));
+			var fullHeight = sizeByDistanceAndAngle(distance, angleOfView(24, f));
+
+			var horizontalOccupancy = objectWidth  / fullWidth;
+			var verticalOccupancy   = objectHeight / fullHeight;
+
+			var width  = 36 * horizontalOccupancy;
+			var height = 24 * verticalOccupancy;
+			var offsetLeft = 36 * (objectOffsetLeft / fullWidth);
+			var offsetTop = 24 * (objectOffsetTop / fullHeight);
+
+			ctx.lineWidth = 0.1;
+			ctx.fillStyle = '#333';
+			ctx.fillRect(
+				(36 - width) / 2 + (offsetLeft),
+				(24 - height) / 2 + (offsetTop),
+				width,
+				height
+			);
+			ctx.strokeRect(
+				(36 - width) / 2 + (offsetLeft),
+				(24 - height) / 2 + (offsetTop),
+				width,
+				height
+			);
+
+			return horizontalOccupancy;
+		};
+
+		var draw = function (distance) {
+			// 道
+			var rate = drawObject(distance, 4000, 1, 0, 1600); 
+
+			// 10m ごとに街路樹
+			if (distance % 10000 === 1000) {
+				drawObject(distance, 300, 10000, -2000, 1600 - 5000);
+			}
+			return rate;
+		};
+
+		for (var i = 1; draw(i * 1000) > 0.05; i++) {
+		}
+
+
+		ctx.restore();
+	}
+
+	initCanvas();
+
+	$('#f-input input').change(function () {
+		initCanvas();
+		f = this.value;
+		drawAngleOfView();
+		drawFinder();
+	}).change();
+});
+		</script>
+	</head>
+	<body>
+		<canvas id="canvas" width="800" height="500"></canvas>
+		<div id="f-input">
+			<label>50mm</label>
+			<input type="range" min="1" max="300" value="50" style="width:500px" />
+		</div>
+		<style scoped>
+			html, body {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+
+			#canvas {
+				width: 100%;
+				height: 100%;
+			}
+
+			#f-input {
+				position: absolute;
+				right: 5px;
+				bottom: 5px;
+			}
+
+			#f-input * {
+			vertical-align: bottom;
+			}
+		</style>
+	</body>
+</html>
+
