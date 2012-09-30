@@ -63,17 +63,17 @@
 			</div>
 			<div class="row">
 				<div class="span6">
-					<h2>印刷物の必要DPI</h2>
-					<p>ある視力の人に対して、ある距離になる印刷物に必要になるDPI</p>
+					<h2>Required DPI for print</h2>
+					<p>DPI for a human which has a visual acuity with a distance</p>
 					<form class="form-horizontal well" id="dpiByDistanceAndVisualAcuity">
 						<div class="control-group">
-							<label class="control-label">視力</label>
+							<label class="control-label">Visual Acuity</label>
 							<div class="controls">
 								<input type="text" name="visualAcuity" value="1.5" class="span1"/>
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">距離</label>
+							<label class="control-label">Distance</label>
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1" name="distance" size="16" type="text" value="50"><span class="add-on">cm</span>
@@ -92,11 +92,11 @@
 					</form>
 				</div>
 				<div class="span6">
-					<h2>手ぶれを無視できるシャッタースピード</h2>
-					<p>ある焦点距離のとき、1px 以内に手ぶれが収まる最低限のシャッタースピード</p>
+					<h2>Ignoring camera shake</h2>
+					<p>A shutter speed for a focal length with jiggle falling in 1px</p>
 					<form class="form-horizontal well" id="minimunSpeedByFocalLength">
 						<div class="control-group">
-							<label class="control-label">焦点距離</label>
+							<label class="control-label">Focal Length</label>
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
@@ -105,7 +105,7 @@
 						</div>
 						<hr style="border-top-color: #999"/>
 						<div class="control-group">
-							<label class="control-label">初心者</label>
+							<label class="control-label">Novice</label>
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
@@ -113,7 +113,7 @@
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">上級者</label>
+							<label class="control-label">Advanced</label>
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
