@@ -26,45 +26,111 @@
 	</head>
 	<body>
 		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h2>Model</h2>
+					<script type="application/x-template" id="models">
+						<select>
+							<% for (var i = 0, it; (it = makers[i]); i++) { %>
+							<optgroup label="<%= it.name %>">
+								<% for (var j = 0, model; (model = it.models[j]); j++) { %>
+								<option value="<%= model.name %>"><%= model.name %></option>
+								<% } %>
+							<% } %>
+							</optgroup>
+						</select>
+					</script>
+
+					<table class="table table-striped" style="width: 500px">
+						<tr>
+							<th>Sensor</th>
+							<td id="spec-sensor"></td>
+						</tr>
+						<tr>
+							<th>Pixels</th>
+							<td id="spec-pixels"></td>
+						</tr>
+						<tr>
+							<th>Nyquist Frequency</th>
+							<td id="spec-nyquist-frequency"></td>
+						</tr>
+						<tr>
+							<th>Minimum speed for negligible jingle</th>
+							<td id="spec-minimun-speed"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span6">
+					<h2>印刷物の必要DPI</h2>
+					<p>ある視力の人に対して、ある距離になる印刷物に必要になるDPI</p>
+					<form class="form-horizontal well" id="dpiByDistanceAndVisualAcuity">
+						<div class="control-group">
+							<label class="control-label">視力</label>
+							<div class="controls">
+								<input type="text" name="visualAcuity" value="1.5" class="span1"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="distance" size="16" type="text" value="50"><span class="add-on">cm</span>
+								</div>
+							</div>
+						</div>
+						<hr style="border-top-color: #999"/>
+						<div class="control-group">
+							<label class="control-label">DPI</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="dpi" size="16" type="text" value=""><span class="add-on">dpi</span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="span6">
+					<h2>手ぶれを無視できるシャッタースピード</h2>
+					<p>ある焦点距離のとき、1px 以内に手ぶれが収まる最低限のシャッタースピード</p>
+					<form class="form-horizontal well" id="minimunSpeedByFocalLength">
+						<div class="control-group">
+							<label class="control-label">焦点距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+						<hr style="border-top-color: #999"/>
+						<div class="control-group">
+							<label class="control-label">初心者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">上級者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
 			<!--
-			<div class="input-prepend">
-				<span class="add-on">F</span><input class="span1" id="f-number" size="16" type="text" placeholder="2.8">
-			</div>
-			<div class="input-append">
-				<input class="span1" id="focal-length" size="16" type="text" placeholder="50"><span class="add-on">mm</span>
-			</div>
-			-->
-
-			<script type="application/x-template" id="models">
-				<select>
-					<% for (var i = 0, it; (it = makers[i]); i++) { %>
-					<optgroup label="<%= it.name %>">
-						<% for (var j = 0, model; (model = it.models[j]); j++) { %>
-						<option value="<%= model.name %>"><%= model.name %></option>
-						<% } %>
-					<% } %>
-					</optgroup>
-				</select>
-			</script>
-
-			<table class="table table-striped" style="width: 500px">
-				<tr>
-					<th>Sensor</th>
-					<td id="spec-sensor"></td>
-				</tr>
-				<tr>
-					<th>Pixels</th>
-					<td id="spec-pixels"></td>
-				</tr>
-				<tr>
-					<th>Nyquist Frequency</th>
-					<td id="spec-nyquist-frequency"></td>
-				</tr>
-				<tr>
-					<th>Minimum speed for negligible jingle</th>
-					<td id="spec-minimun-speed"></td>
-				</tr>
-			</table>
+					<div class="input-prepend">
+						<span class="add-on">F</span><input class="span1" id="f-number" size="16" type="text" placeholder="2.8">
+					</div>
+					<div class="input-append">
+						<input class="span1" id="focal-length" size="16" type="text" placeholder="50"><span class="add-on">mm</span>
+					</div>
+					-->
 		</div>
 	</body>
 </html>

@@ -2,220 +2,13 @@
 
 var libphoto = require('../lib/libphoto');
 
-var models = [
-	{
-		name : 'Canon EOS 1D X',
-		sensorSize : {
-			width: 36,
-			height: 24
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Canon EOS 5D Mark III',
-		sensorSize : {
-			width: 36,
-			height: 24
-		},
-
-		pixels : {
-			width: 5760,
-			height: 3840
-		}
-	},
-	{
-		name : 'Canon EOS 5D Mark II',
-		sensorSize : {
-			width: 36,
-			height: 24
-		},
-
-		pixels : {
-			width: 5616,
-			height: 3744
-		}
-	},
-	{
-		name : 'Canon EOS 6D',
-		sensorSize : {
-			width: 35.8,
-			height: 23.9
-		},
-
-		pixels : {
-			width: 5472,
-			height: 3648
-		}
-	},
-	{
-		name : 'Canon EOS 7D',
-		sensorSize : {
-			width: 22.3,
-			height: 14.9
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Canon EOS 60D',
-		sensorSize : {
-			width: 22.3,
-			height: 14.9
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Canon EOS X6i',
-		sensorSize : {
-			width: 22.3,
-			height: 14.9
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Canon EOS X5',
-		sensorSize : {
-			width: 22.3,
-			height: 14.9
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Canon EOS X50',
-		sensorSize : {
-			width: 22.0,
-			height: 14.7
-		},
-
-		pixels : {
-			width: 4272,
-			height: 2848
-		}
-	},
-	{
-		name : 'Canon EOS M',
-		sensorSize : {
-			width: 22.3,
-			height: 14.9
-		},
-
-		pixels : {
-			width: 5184,
-			height: 3456
-		}
-	},
-	{
-		name : 'Nikon D4',
-		sensorSize : {
-			width: 36,
-			height: 23.9
-		},
-
-		pixels : {
-			width: 4928,
-			height: 3280
-		}
-	},
-	{
-		name : 'Nikon D800',
-		sensorSize : {
-			width: 35.9,
-			height: 24.0
-		},
-
-		pixels : {
-			width: 7360,
-			height: 4912
-		}
-	},
-	{
-		name : 'Nikon D600',
-		sensorSize : {
-			width: 35.9,
-			height: 24.0
-		},
-
-		pixels : {
-			width: 6016,
-			height: 4016
-		}
-	},
-	{
-		name : 'Nikon D7000',
-		sensorSize : {
-			width: 23.6,
-			height: 15.6
-		},
-
-		pixels : {
-			width: 4928,
-			height: 3264
-		}
-	},
-	{
-		name : 'Nikon D5100',
-		sensorSize : {
-			width: 23.6,
-			height: 15.6
-		},
-
-		pixels : {
-			width: 4928,
-			height: 3264
-		}
-	},
-	{
-		name : 'Nikon D3200',
-		sensorSize : {
-			width: 23.2,
-			height: 15.4
-		},
-
-		pixels : {
-			width: 6016,
-			height: 4000
-		}
-	},
-	{
-		name : 'Nikon D3100',
-		sensorSize : {
-			width: 23.1,
-			height: 15.4
-		},
-
-		pixels : {
-			width: 4608,
-			height: 3072
-		}
-	}
-];
+var models = JSON.parse(require('fs').readFileSync('./lib/models.json', 'utf-8'));
 
 for (var i = 0, it; (it = models[i]); i++) {
 	models[ it.name ] = it;
 }
 
-// var model = models['Nikon D800'];
-// var model = models['Canon EOS 7D'];
-var model = models['Canon EOS 5D Mark II'];
+var model = models['EOS 5D Mark II'];
 
 console.log('Pixels', model.pixels.width * model.pixels.height);
 console.log('Density', model.pixels.width / model.sensorSize.width, model.pixels.height / model.sensorSize.height, 'pixels/mm');
@@ -240,15 +33,50 @@ show(50);
 show(100);
 show(200);
 
-var circle      = model.sensorSize.width / model.pixels.width;
-var focalLength = 35;
+var circle      = libphoto.circleOfConfusion(420, 300, model.sensorSize.width);
+// var circle      = model.sensorSize.width / model.pixels.width;
+var focalLength = 20;
 var fNumber     = 8;
-var distance    = 23.8875  * 1000;
+var distance    = 7000;
 console.log(circle);
-console.log(libphoto.hyperfocalDistanceByCircle(focalLength, fNumber, (model.sensorSize.width / model.pixels.width)) / 1000, 'm');
-var depthOfField = libphoto.depthOfField(distance, focalLength, fNumber, (model.sensorSize.width / model.pixels.width));
+console.log(libphoto.hyperfocalDistanceByCircle(focalLength, fNumber, circle) / 1000, 'm');
+var depthOfField = libphoto.depthOfField(distance, focalLength, fNumber, circle);
 console.log(depthOfField.map(function (n) { return n / 1000 }), 'm');
 console.log(depthOfField[0] - distance, depthOfField[1] - distance, 'mm');
+
+function a (n) {
+	return Math.floor(
+		1000 /
+			(Math.pow(2, (2 * n - 1) / 4)) + 0.2
+	);
+}
+
+function b (n) {
+	return Math.floor(
+		1000 /
+			(Math.pow(2, (n - 1) / 2)) + 0.2
+	);
+}
+
+var paperSize = [];
+for (var i = 0; i < 11; i++) {
+//	paperSize.push({
+//		name : 'B' + i,
+//		width : b(i),
+//		height: b(i + 1) 
+//	});
+	paperSize.push({
+		name : 'A' + i,
+		width : a(i),
+		height: a(i + 1) 
+	});
+}
+
+for (var i = 0, it; (it = paperSize[i]); i++) {
+	paperSize[it.name] = it;
+}
+
+console.log(paperSize);
 
 /*
 
@@ -321,3 +149,8 @@ console.log(~~angleToFocalLength(36, lowerFocalDistanceByPixelAndVisualAcuity(pi
 
 */
 
+function sizeByDistanceAndAngle (distance, angle) {
+	return Math.tan(angle / 2) * (2 * distance);
+}
+
+console.log(sizeByDistanceAndAngle(5000, Math.PI * 2 / 360 / 60));
