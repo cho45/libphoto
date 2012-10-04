@@ -5,7 +5,7 @@ LibPhoto = {
 	init : function () {
 		var self = this;
 		$.ajax({
-			url: "/lib/models.json",
+			url: "lib/models.json",
 			type : "GET",
 			data : {},
 			dataType: 'json',
