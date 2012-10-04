@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>写真計算機</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 		<link rev="made" href="mailto:cho45@lowreal.net"/>
@@ -28,7 +28,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span12">
-					<h2>Model</h2>
+					<h2>モデル</h2>
 					<script type="application/x-template" id="models">
 						<select>
 							<% for (var i = 0, it; (it = makers[i]); i++) { %>
@@ -43,19 +43,19 @@
 
 					<table class="table table-striped" style="width: 500px">
 						<tr>
-							<th>Sensor</th>
+							<th>センサー</th>
 							<td id="spec-sensor"></td>
 						</tr>
 						<tr>
-							<th>Pixels</th>
+							<th>画素数</th>
 							<td id="spec-pixels"></td>
 						</tr>
 						<tr>
-							<th>Nyquist Frequency</th>
+							<th>ナイキスト周波数</th>
 							<td id="spec-nyquist-frequency"></td>
 						</tr>
 						<tr>
-							<th>Minimum speed for negligible jingle</th>
+							<th>手ぶれ限界</th>
 							<td id="spec-minimun-speed"></td>
 						</tr>
 					</table>
@@ -63,17 +63,201 @@
 			</div>
 			<div class="row">
 				<div class="span6">
-					<h2>Required DPI for print</h2>
-					<p>DPI for a human which has a visual acuity with a distance</p>
-					<form class="form-horizontal well" id="dpiByDistanceAndVisualAcuity">
+					<h2>手ぶれを無視できるシャッタースピード</h2>
+					<form class="form-horizontal well" id="minimunSpeedByFocalLength">
 						<div class="control-group">
-							<label class="control-label">Visual Acuity</label>
+							<label class="control-label">焦点距離</label>
 							<div class="controls">
-								<input type="text" name="visualAcuity" value="1.5" class="span1"/>
+								<div class="input-append">
+									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+						<hr style="border-top-color: #999"/>
+						<div class="control-group">
+							<label class="control-label">初心者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">Distance</label>
+							<label class="control-label">上級者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
+							</div>
+						</div>
+					</form>
+					<p>1px 以内に手ぶれを収めることができるシャッタースピード。手ぶれの角速度(角度/秒)は初心者で5度・上級者で2度を想定 (昔の Nikon のサイトでの記述を根拠に)</p>
+				</div>
+				<div class="span6">
+					<h2>出力サイズを考慮した手ぶれ限界</h2>
+					<form class="form-horizontal well" id="minimunSpeedByFocalLengthMore">
+						<div class="control-group">
+							<label class="control-label">焦点距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">鑑賞者の視力</label>
+							<div class="controls">
+								<input type="text" name="visualAcuity" value="2.0" class="span1"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">鑑賞距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="distance" size="16" type="text" value="50"><span class="add-on">cm</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">プリントサイズ</label>
+							<div class="controls">
+								<select name="size">
+									<option value="1189x841">A0</option>
+									<option value="841x594">A1</option>
+									<option value="594x420">A2</option>
+									<option value="420x297">A3</option>
+									<option value="483x329">A3+</option>
+									<option value="297x210">A4</option>
+									<option value="210x148">A5</option>
+									<option value="148x105">A6</option>
+									<option value="127x89">L版</option>
+									<option value="105x74">A7</option>
+									<option value="74x52">A8</option>
+									<option value="52x37">A9</option>
+									<option value="37x26">A10</option>
+								</select>
+							</div>
+						</div>
+						<hr style="border-top-color: #999"/>
+						<div class="control-group">
+							<label class="control-label">初心者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">上級者</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
+								</div>
+							</div>
+						</div>
+					</form>
+					<p>小さくプリントする場合、多少の手ぶれを無視できる。プリントサイズに応じた手ぶれの限界の計算 (フチなし全面印刷を想定)</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span6">
+					<h2>被写界深度</h2>
+					<form class="form-horizontal well" id="depthOfField">
+						<legend>前提</legend>
+						<div class="control-group">
+							<label class="control-label">プリントサイズ</label>
+							<div class="controls">
+								<select name="size">
+									<option value="1189x841">A0</option>
+									<option value="841x594">A1</option>
+									<option value="594x420">A2</option>
+									<option value="420x297" selected>A3</option>
+									<option value="483x329">A3+</option>
+									<option value="297x210">A4</option>
+									<option value="210x148">A5</option>
+									<option value="148x105">A6</option>
+									<option value="127x89">L版</option>
+									<option value="105x74">A7</option>
+									<option value="74x52">A8</option>
+									<option value="52x37">A9</option>
+									<option value="37x26">A10</option>
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">視力</label>
+							<div class="controls">
+								<input type="text" name="visualAcuity" value="2.0" class="span1"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">鑑賞距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="distance" size="16" type="text" value="50"><span class="add-on">cm</span>
+								</div>
+							</div>
+						</div>
+
+						<legend>パラメータ</legend>
+						<div class="control-group">
+							<label class="control-label">焦点距離</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">ピント位置</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1" name="target" size="16" type="text" value="500"><span class="add-on">cm</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">F値</label>
+							<div class="controls">
+								<input type="text" name="fNumber" value="2.8" class="span1"/>
+							</div>
+						</div>
+						<hr style="border-top-color: #999"/>
+						<div class="control-group">
+							<label class="control-label">被写界深度</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span1 uneditable-input" name="depthOfField" size="16" type="text" value=""><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">ピント前後</label>
+							<div class="controls">
+								<div class="input-append">
+									<input class="span2 uneditable-input" name="depthOfField2" size="16" type="text" value=""><span class="add-on">mm</span>
+								</div>
+							</div>
+						</div>
+					</form>
+					<p>
+					マクロを考慮していないので注意
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span6">
+					<h2>印刷物の要求DPI</h2>
+					<p>印刷物の要求DPIは鑑賞者の視力と鑑賞距離によって決まる。(モデルの選択は無視されます)</p>
+					<form class="form-horizontal well" id="dpiByDistanceAndVisualAcuity">
+						<div class="control-group">
+							<label class="control-label">視力</label>
+							<div class="controls">
+								<input type="text" name="visualAcuity" value="2.0" class="span1"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">鑑賞距離</label>
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1" name="distance" size="16" type="text" value="50"><span class="add-on">cm</span>
@@ -86,37 +270,6 @@
 							<div class="controls">
 								<div class="input-append">
 									<input class="span1 uneditable-input" name="dpi" size="16" type="text" value=""><span class="add-on">dpi</span>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="span6">
-					<h2>Ignoring camera shake</h2>
-					<p>A shutter speed for a focal length with jiggle falling in 1px</p>
-					<form class="form-horizontal well" id="minimunSpeedByFocalLength">
-						<div class="control-group">
-							<label class="control-label">Focal Length</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
-								</div>
-							</div>
-						</div>
-						<hr style="border-top-color: #999"/>
-						<div class="control-group">
-							<label class="control-label">Novice</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">Advanced</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
 								</div>
 							</div>
 						</div>

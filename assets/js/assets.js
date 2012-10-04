@@ -36,7 +36,7 @@ LibPhoto = {
 			}
 		});
 
-		$('form input').change(function () {
+		$('form input, form select').change(function () {
 			self.calculate();
 		});
 	},
@@ -53,7 +53,7 @@ LibPhoto = {
 
 		var speed  = 1 / minimunSpeedByFocalLength(50, model);
 		var factor = speed / 50;
-		$('#spec-minimun-speed').text( '1/' + ~~(speed) + 'sec = ' + ~~factor + 'x (50mm)' );
+		$('#spec-minimun-speed').text(~~factor + 'x' +  ' (1/' + ~~(speed) + 'sec 50mm)' );
 
 		self.model = model;
 	},
@@ -88,6 +88,62 @@ LibPhoto = {
 				}
 			))
 		);
+
+		$('#minimunSpeedByFocalLengthMore [name=shutterSpeed-novice]').val(
+			self.formatShutterSpeed(minimunSpeedByFocalLength(
+				+$('#minimunSpeedByFocalLengthMore [name=focalLength]').val(),
+				{
+					sensorSize   : self.model.sensorSize,
+					pixels       : self.model.pixels,
+					jiggle_angle : minimunSpeedByFocalLength.JIGGLE_ANGLE.NOVICE
+				}
+			) * Math.max(
+					(
+						self.model.pixels.width /
+						(+$('#minimunSpeedByFocalLengthMore [name=size]').val().split(/x/)[1] / 25.4)
+					) /
+					dpiByDistanceAndVisualAcuity(
+						+$('#minimunSpeedByFocalLengthMore [name=distance]').val() * 10,
+						+$('#minimunSpeedByFocalLengthMore [name=visualAcuity]').val()
+					),
+				1
+			))
+		);
+
+		$('#minimunSpeedByFocalLengthMore [name=shutterSpeed-advanced]').val(
+			self.formatShutterSpeed(minimunSpeedByFocalLength(
+				+$('#minimunSpeedByFocalLengthMore [name=focalLength]').val(),
+				{
+					sensorSize   : self.model.sensorSize,
+					pixels       : self.model.pixels,
+					jiggle_angle : minimunSpeedByFocalLength.JIGGLE_ANGLE.ADVANCED
+				}
+			) * Math.max(
+					(
+						self.model.pixels.height /
+						(+$('#minimunSpeedByFocalLengthMore [name=size]').val().split(/x/)[1] / 25.4)
+					) /
+					dpiByDistanceAndVisualAcuity(
+						+$('#minimunSpeedByFocalLengthMore [name=distance]').val() * 10,
+						+$('#minimunSpeedByFocalLengthMore [name=visualAcuity]').val()
+					),
+				1
+			))
+		);
+
+		var focalLength = +$('#depthOfField [name=focalLength]').val();
+		var fNumber     = +$('#depthOfField [name=fNumber]').val();
+		var distance    = +$('#depthOfField [name=target]').val() * 10;
+		var size        = +$('#depthOfField [name=size]').val().split(/x/)[1];
+		var visualAcuity= +$('#depthOfField [name=size]').val().split(/x/)[1];
+		var dpi = dpiByDistanceAndVisualAcuity(
+			+$('#depthOfField [name=distance]').val() * 10,
+			+$('#depthOfField [name=visualAcuity]').val()
+		);
+		var circle      = circleOfConfusion(size, dpi, self.model.sensorSize.width);
+		var dof = depthOfField(distance, focalLength, fNumber, circle);
+		$('#depthOfField [name=depthOfField]').val(~~(dof[1] - dof[0]));
+		$('#depthOfField [name=depthOfField2]').val( ~~(dof[0] - distance) + ' +' + ~~(dof[1] - distance) );
 	},
 
 	formatShutterSpeed : function (speed) {

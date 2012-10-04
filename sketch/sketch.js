@@ -44,6 +44,15 @@ var depthOfField = libphoto.depthOfField(distance, focalLength, fNumber, circle)
 console.log(depthOfField.map(function (n) { return n / 1000 }), 'm');
 console.log(depthOfField[0] - distance, depthOfField[1] - distance, 'mm');
 
+console.log('=====');
+
+var lowestDPI = libphoto.dpiByDistanceAndVisualAcuity(500, 1.5);
+var size      = 483;
+var maxDPI    = model.pixels.width / (size / 25.4);
+console.log([lowestDPI, maxDPI, maxDPI / lowestDPI]);
+console.log(1 / libphoto.minimunSpeedByFocalLength(50, model) / Math.max(maxDPI / lowestDPI, 1), 'sec');
+
+/*
 function a (n) {
 	return Math.floor(
 		1000 /
@@ -70,6 +79,7 @@ for (var i = 0; i < 11; i++) {
 		width : a(i),
 		height: a(i + 1) 
 	});
+	console.log('<option value="%s">%s</option>', a(i) + 'x' + a(i + 1), 'A' + i);
 }
 
 for (var i = 0, it; (it = paperSize[i]); i++) {
@@ -77,7 +87,7 @@ for (var i = 0, it; (it = paperSize[i]); i++) {
 }
 
 console.log(paperSize);
-
+*/
 /*
 
 
@@ -149,8 +159,3 @@ console.log(~~angleToFocalLength(36, lowerFocalDistanceByPixelAndVisualAcuity(pi
 
 */
 
-function sizeByDistanceAndAngle (distance, angle) {
-	return Math.tan(angle / 2) * (2 * distance);
-}
-
-console.log(sizeByDistanceAndAngle(5000, Math.PI * 2 / 360 / 60));
