@@ -8,15 +8,38 @@ for (var i = 0, it; (it = models[i]); i++) {
 	models[ it.name ] = it;
 }
 
-var model = models['EOS 5D Mark II'];
+var model = models['D800'];
 
 console.log('Pixels', model.pixels.width * model.pixels.height);
 console.log('Density', model.pixels.width / model.sensorSize.width, model.pixels.height / model.sensorSize.height, 'pixels/mm');
-
+console.log('Pixel Size', model.sensorSize.width / model.pixels.width, 'mm');
 var spatialFrequency = model.pixels.width / model.sensorSize.width / 2;
 console.log('Spatial frequency', spatialFrequency, 'Hz(mm)');
 var nyquistFrequency = spatialFrequency / 2;
 console.log('Nyquist frequency', nyquistFrequency, 'Hz(mm)');
+
+/**
+ * F値 `f`, 波長 `lambda` nm におけるレイリー限界 (mm)
+ */
+function rayleighLimit (f, lambda) {
+	return 1.22 * (lambda * 0.000001 * f);
+}
+
+// 500nm は緑
+console.log('rayleighLimit F32', rayleighLimit(32, 500));
+//=> rayleighLimit F32 0.01952
+console.log('rayleighLimit F11', rayleighLimit(11, 500));
+//=> rayleighLimit F11 0.00671
+console.log('rayleighLimit F8', rayleighLimit(8, 500));
+//=> rayleighLimit F8 0.00488
+console.log('rayleighLimit F5.6', rayleighLimit(5.6, 500));
+//=> rayleighLimit F5.6 0.0034159999999999998
+console.log('rayleighLimit F2.8', rayleighLimit(2.8, 500));
+//=> rayleighLimit F2.8 0.0017079999999999999
+//
+console.log('rayleighLimit F8', rayleighLimit(8, 380));
+console.log('rayleighLimit F8', rayleighLimit(8, 500));
+console.log('rayleighLimit F8', rayleighLimit(8, 750));
 
 function show (f) {
 	var speed = 1 / libphoto.minimunSpeedByFocalLength(f, model);

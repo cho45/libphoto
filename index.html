@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>写真計算機</title>
+		<title>Caca</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 		<link rev="made" href="mailto:cho45@lowreal.net"/>
@@ -20,15 +20,47 @@
 
 		<style>
 			body {
-				padding: 20px 0 0 0;
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+
+			.navbar-fixed-top, .navbar-fixed-bottom, .navbar-static-top {
+				margin-right: -10px;
+				margin-left: -10px;
+			}
+
+			form .table th {
+				vertical-align: middle;
 			}
 		</style>
 	</head>
 	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="">Caca</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="">
+								<a href="#models">Model</a>
+								<a href="#shutter-speed">Shutter Speed</a>
+								<a href="#shutter-speed-by-size">Shutter Speed by Size</a>
+								<a href="#dof">Depth of Field</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="span12">
-					<h2>モデル</h2>
+					<h3>Model</h3>
 					<script type="application/x-template" id="models">
 						<select>
 							<% for (var i = 0, it; (it = makers[i]); i++) { %>
@@ -41,7 +73,7 @@
 						</select>
 					</script>
 
-					<table class="table table-striped" style="width: 500px">
+					<table class="table table-striped" style="max-width: 500px; width: 100%">
 						<tr>
 							<th>センサー</th>
 							<td id="spec-sensor"></td>
@@ -62,39 +94,45 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="span6">
-					<h2>手ぶれを無視できるシャッタースピード</h2>
-					<form class="form-horizontal well" id="minimunSpeedByFocalLength">
-						<div class="control-group">
-							<label class="control-label">焦点距離</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
-								</div>
-							</div>
-						</div>
-						<hr style="border-top-color: #999"/>
-						<div class="control-group">
-							<label class="control-label">初心者</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label">上級者</label>
-							<div class="controls">
-								<div class="input-append">
-									<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
-								</div>
-							</div>
-						</div>
+				<div class="span6" id="shutter-speed">
+					<h3>Shutter Speed</h3>
+					<p>手ぶれを無視できるシャッタースピード</p>
+					<form class="" id="minimunSpeedByFocalLength">
+						<table class="table">
+							<tr>
+								<th>焦点距離</th>
+								<td>
+									<div class="input-append">
+										<input class="span1" name="focalLength" size="16" type="text" value="50"><span class="add-on">mm</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"></td>
+							</tr>
+							<tr>
+								<th>初心者</th>
+								<td>
+									<div class="input-append">
+										<input class="span1 uneditable-input" name="shutterSpeed-novice" size="16" type="text" value=""><span class="add-on">sec</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>上級者</th>
+								<td>
+									<div class="input-append">
+										<input class="span1 uneditable-input" name="shutterSpeed-advanced" size="16" type="text" value=""><span class="add-on">sec</span>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</form>
 					<p>1px 以内に手ぶれを収めることができるシャッタースピード。手ぶれの角速度(角度/秒)は初心者で5度・上級者で2度を想定 (昔の Nikon のサイトでの記述を根拠に)</p>
 				</div>
-				<div class="span6">
-					<h2>出力サイズを考慮した手ぶれ限界</h2>
+				<div class="span6" id="shutter-speed-by-size">
+					<h3>Shutter Speed by Size</h3>
+					<p>出力サイズを考慮した手ぶれ限界</p>
 					<form class="form-horizontal well" id="minimunSpeedByFocalLengthMore">
 						<div class="control-group">
 							<label class="control-label">焦点距離</label>
@@ -160,8 +198,8 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="span6">
-					<h2>被写界深度</h2>
+				<div class="span6" id="dof">
+					<h3>被写界深度</h3>
 					<form class="form-horizontal well" id="depthOfField">
 						<legend>前提</legend>
 						<div class="control-group">
@@ -245,9 +283,9 @@
 					</p>
 				</div>
 			</div>
-			<div class="row">
+			<!-- div class="row">
 				<div class="span6">
-					<h2>印刷物の要求DPI</h2>
+					<h3>印刷物の要求DPI</h3>
 					<p>印刷物の要求DPIは鑑賞者の視力と鑑賞距離によって決まる。(モデルの選択は無視されます)</p>
 					<form class="form-horizontal well" id="dpiByDistanceAndVisualAcuity">
 						<div class="control-group">
@@ -275,7 +313,8 @@
 						</div>
 					</form>
 				</div>
-			</div>
+			</div-->
+
 			<!--
 					<div class="input-prepend">
 						<span class="add-on">F</span><input class="span1" id="f-number" size="16" type="text" placeholder="2.8">

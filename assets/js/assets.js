@@ -52,7 +52,7 @@ LibPhoto = {
 		$('#spec-nyquist-frequency').text(~~nyquistFrequency + 'Hz/mm');
 
 		var speed  = 1 / minimunSpeedByFocalLength(50, model);
-		var factor = speed / 50;
+		var factor = Math.ceil(speed / 50);
 		$('#spec-minimun-speed').text(~~factor + 'x' +  ' (1/' + ~~(speed) + 'sec 50mm)' );
 
 		self.model = model;
