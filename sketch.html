@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+		<title>最良写真撮影条件計算</title>
+
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
+
+
+		<link rev="made" href="mailto:cho45@lowreal.net"/>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+		<style>
+
+body {
+	font-size: 18px;
+	background: #fff;
+	color: #333;
+	font-family: "Noto Sans Japanese";
+	font-feature-settings: "pwid";
+	-webkit-font-smoothing: antialiased;
+	text-align: justify;
+	line-height: 1.8;
+	padding-bottom: 300px;
+}
+
+.content {
+	max-width: 1024px;
+	margin: auto;
+	padding: 1em;
+}
+
+h1, h2, h3, h4, h5 ,h6 {
+	margin: 2em 0 0.5em 0;
+	font-weight: bold;
+	font-feature-settings: "palt";
+	letter-spacing: -0.04em;
+}
+
+h1 {
+	margin: 0 0 0.5em 0;
+}
+
+h2 {
+	font-size: 250%;
+	font-weight: normal;
+}
+
+.less {
+	font-size: 80%;
+	opacity: 0.7;
+}
+
+table {
+	font-size: inherit;
+}
+
+.camera-spec .input-group-addon:last-child {
+	width: 60px;
+}
+
+
+.share-buttons {
+	vertical-align: middle;
+	line-height: 32px;
+	padding: 8px;
+	font-size: 14px;
+	background: #fff;
+	margin: 0;
+	text-align: center;
+	color: #000;
+}
+
+.share-buttons::before {
+	display: block;
+	content: "このセクションを共有する";
+	font-size: 14px;
+	margin: 0 0 6px 0;
+	padding: 0;
+	color: #666;
+	line-height: 1.2;
+}
+
+.share-buttons .share-button {
+	display: inline-block;
+	text-align: center;
+	height: 40px;
+	width: 40px;
+	margin-right: 8px;
+	position: relative;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.share-buttons .share-button img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#floating-detail {
+	line-height: 1.3;
+	display: none;
+	position: fixed;
+	z-index: 999;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 16px;
+	box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
+	background: rgba(255, 255, 255, 0.9);
+}
+
+#floating-detail table {
+	display: block;
+	max-width: 1024px;
+	margin: auto;
+	padding: 0;
+}
+
+#floating-detail table tr  {
+	display: inline-block;
+}
+
+#floating-detail table td ,
+#floating-detail table th {
+	display: inline;
+	border: none;
+	margin: 0;
+	padding: 0 8px 0 0;
+}
+
+#floating-detail.show {
+	display: block;
+}
+
+strong {
+	font-size: 150%;
+	font-weight: normal;
+}
+		</style>
+	</head>
+	<body>
+		<div class="content" id="app">
+			<h1>最良撮影条件</h1>
+			<section>
+				<p>
+				このページではカメラのスペック情報から、手ぶれを抑えこめるシャッタースピードの限界や、回折ボケが発生しはじめるF値などを求めることができます。
+				</p>
+				<p>
+				主にカメラのセンサーのスペックを分解能の点で最大限生かす撮影条件を求めることを目的としており、ピクセル等倍で見る場合や大判プリントのような最も厳しい鑑賞条件が暗黙的に想定されています。
+				現実的な撮影では、カメラのセンサースペックを無視して特定の鑑賞条件(プリントサイズや鑑賞距離など)にあわせた撮影を行うほうが理にかなっています。
+				あくまで参考情報としてお使いください。
+				</p>
+			</section>
+
+			<section>
+				<h2>カメラの情報を入力</h2>
+				<p>計算に使用するカメラのスペックを入力します。プリセットを選択するか値を入力します。
+				メーカーごとのスペック表記の違いにより正確なピクセルサイズではないことがあります。「総画素数」表記がある場合はその数値を採用し、それがない場合は「有効画素数」の数値を採用しています。
+				</p>
+
+				<form class="form-horizontal camera-spec">
+					<div style="margin: 16px 0">
+						<label class="control-label">プリセット</label>
+						<select class="form-control input-lg" style="font-size: 16px" v-model="cameraPreset">
+							<optgroup v-bind:label="group.name" v-for="group in modelSelect">
+								<option v-for="model in group.models" v-bind:value="model.name">
+								{{ model.name }} ({{ Math.round(model.pixelCount / 1e6) }}M)
+								</option>
+							</optgroup>
+							<option value="">その他</option>
+						</select>
+					</div>
+
+					<div class="form-group" v-if="!model">
+						<label class="col-sm-3 control-label">カメラ名</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control input-lg" placeholder="" v-model="cameraName" v-bind:readonly="model">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">センサーサイズ</label>
+						<div class="col-sm-9 form-inline">
+							<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-resize-vertical"></span></div>
+								<input type="number" class="form-control input-lg" placeholder="35.0" v-model="sensorWidth" v-bind:readonly="model">
+								<div class="input-group-addon">mm</div>
+							</div>
+							<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-resize-horizontal"></span></div>
+								<input type="number" class="form-control input-lg" placeholder="24.0" v-model="sensorHeight" v-bind:readonly="model">
+								<div class="input-group-addon">mm</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword" class="col-sm-3 control-label">センサーピクセル数</label>
+						<div class="col-sm-9 form-inline">
+							<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-resize-vertical"></span></div>
+								<input type="number" class="form-control input-lg" placeholder="" v-model="sensorPixelWidth" v-bind:readonly="model">
+								<div class="input-group-addon">px</div>
+							</div>
+							<div class="input-group">
+								<div class="input-group-addon"><span class="glyphicon glyphicon-resize-horizontal"></span></div>
+								<input type="number" class="form-control input-lg" placeholder="" v-model="sensorPixelHeight" v-bind:readonly="model">
+								<div class="input-group-addon">px</div>
+							</div>
+						</div>
+					</div>
+				</form>
+
+				<h2 class="" id="result">
+					カメラスペック
+				</h2>
+				<!-- form class="form-horizontal camera-spec">
+					<div class="form-group">
+						<label class="col-sm-5 control-label">カメラ名</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+								<a v-bind:href="linkToAmazon(cameraName)">{{cameraName}}</a>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">センサーサイズ</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+							{{sensorWidth}}mm x {{sensorHeight}}mm
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">ピクセル数</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+							{{sensorPixelWidth}}px x {{sensorPixelHeight}}px
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">ピクセルサイズ</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+							{{sensorPixelSizeWidth | mm2um | toFixed(2) }}μm x {{sensorPixelSizeHeight | mm2um | toFixed(2) }}μm
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">手持ちシャッタースピード限界</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+								<strong>1/焦点距離の{{Math.ceil(minimunSpeedFactor*10)/10}}倍</strong><br>
+								1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,2)*10)/10}}倍(手ぶれ補正2段)<br>
+								1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,3)*10)/10}}倍(手ぶれ補正3段)<br>
+								1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,4)*10)/10}}倍(手ぶれ補正4段)<br>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">小絞りボケ開始F値</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+							<strong>F{{limitFNumber | toFixed(1) }}</strong>
+							</p>
+						</div>
+					</div>
+				</form -->
+				<table class="table">
+					<tr>
+						<th>カメラ名</th>
+						<td>
+							<a v-bind:href="linkToAmazon(cameraName)">{{cameraName}}</a>
+						</td>
+					</tr>
+					<tr>
+						<th>センサーサイズ</th>
+						<td>{{sensorWidth}}mm x {{sensorHeight}}mm</td>
+					</tr>
+					<tr>
+						<th>ピクセル数</th>
+						<td>{{sensorPixelWidth}}px x {{sensorPixelHeight}}px</td>
+					</tr>
+					<tr>
+						<th>ピクセルサイズ</th>
+						<td>{{sensorPixelSizeWidth | mm2um | toFixed(2) }}μm x {{sensorPixelSizeHeight | mm2um | toFixed(2) }}μm</td>
+					</tr>
+					<tr>
+						<th>手持ちシャッタースピード限界</th>
+						<td>
+							<strong>1/焦点距離の{{Math.ceil(minimunSpeedFactor*10)/10}}倍</strong><br>
+							1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,2)*10)/10}}倍(手ぶれ補正2段)<br>
+							1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,3)*10)/10}}倍(手ぶれ補正3段)<br>
+							1/焦点距離の{{Math.ceil(minimunSpeedFactor/Math.pow(2,4)*10)/10}}倍(手ぶれ補正4段)<br>
+						</td>
+					</tr>
+					<tr>
+						<th>小絞りボケ開始F値</th>
+						<td><strong>F{{limitFNumber | toFixed(1) }}</strong></td>
+					</tr>
+				</table>
+				<div class="share-buttons">
+					<a class="share-button" style="background: #3b5998" v-bind:href="shareLink('https://www.facebook.com/sharer/sharer.php?u=%u', '#result')">
+						<img src="https://lowreal.net/2016/sharebuttons/FB-f-Logo__white_50.png" width="18" height="18" alt="Facebook"/>
+					</a>
+					<a class="share-button" style="background: #55acee" v-bind:href="shareLink('https://twitter.com/share?url=%u', '#result')">
+						<img src="https://lowreal.net/2016/sharebuttons/Twitter_logo_white_48.png" width="24" height="24" alt="Twitter"/>
+					</a>
+					<a class="share-button" style="box-shadow: none"
+						v-bind:href="shareLink('https://plus.google.com/share?url=%u', '#result')">
+						<img src="https://lowreal.net/2016/sharebuttons/g+138.png" width="45" height="45" alt="Share on Google+"/>
+					</a>
+					<a class="share-button" style="" v-bind:href="shareLink('http://line.me/R/msg/text/?%u', '#result')">
+						<img src="https://lowreal.net/2016/sharebuttons/linebutton_40x40_en.png" width="40" height="40" alt="LINE it!"/>
+					</a>
+				</div>
+
+				<h2>手持ちシャッタースピード限界</h2>
+				<p>
+					手ぶれが起こっていてもそれによって生じる像のブレがセンサーピクセルサイズ未満であれば、手ぶれしていないとみなすことができます。
+					この限界はセンサーサイズ・ピクセル数・手ぶれの大きさ(角速度)および焦点距離によって決まります。
+				</p>
+				<p>この計算機では「1/焦点距離のn倍」という形で表示しています。例えば「焦点距離の10倍」と表示されている場合、レンズ焦点距離が50mmならば1/500秒よりも短いシャッタースピードにする必要があるという意味です。</p>
+				<p>手ぶれの大きさは個人差がありますが、ここでは初級者の5度/秒としています。また、角度ぶれのみを考慮し、シフトぶれ(マクロ撮影で影響が大きくなる)は考慮していません。</p>
+
+				<h2>小絞りボケ開始F値</h2>
+				<p>絞りを絞っていくと光の回折現象の影響が大きくなり分解能が低下します。この現象は回避することができません。ここではカメラのセンサーサイズとピクセル数から、センサーピクセルサイズを算出し、
+				<a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%82%A2%E3%83%AA%E3%83%BC%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF">エアリーディスク</a>の大きさがセンサーピクセルサイズを超えるF値を求めます。つまりこのF値を超えると分解能が下がりはじめます。</p>
+
+
+				<h2 id="dof">被写界深度</h2>
+				<p>ピントのあっている1平面以外の前後では絞りを解放するにしたがってボケが発生します。このボケがセンサーピクセルサイズ未満である範囲ならば、ボケていないとみなすことができます。
+				このボケていない範囲、すなわちピントのあっているとみなすことができる範囲のことを被写界深度といいます。この範囲はセンサーサイズ・ピクセル数・レンズ焦点距離・ピント位置およびF値によって決まります。
+				</p>
+				<p>
+				絞りを絞るほど被写界深度は深くなりますが、一方で回折現象による小絞りボケが発生しはじめるため分解能に影響がでるというトレードオフがあります。
+				この計算機では回折現象を考慮し、センサーピクセルサイズを小絞りボケが超える場合には小絞りボケを基準に被写界深度を計算します。
+				</p>
+				<p>計算のためには追加のパラメータを設定する必要があります。</p>
+				<form class="form-horizontal camera-spec">
+					<div class="form-group">
+						<label class="col-sm-5 control-label">レンズ焦点距離</label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<input type="number" class="form-control input-lg" placeholder="" v-model="focalLength">
+								<div class="input-group-addon">mm</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-5 control-label">絞り</label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<div class="input-group-addon">F</div>
+								<input type="number" class="form-control input-lg" placeholder="" v-model="fNumber">
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-5 control-label">過焦点距離</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+								<b>{{ (hyperfocalDistance / 1000).toFixed(2) }}</b> m<br>
+								{{ (hyperfocalDistance / 1000 / 2).toFixed(2) }} m〜無限遠までピントがあいます<br>
+
+								<span v-if="limitFNumber &lt; fNumber" class="label label-danger" style="">
+									<span class="glyphicon glyphicon-warning-sign" style="" aria-hidden="true"></span>
+									小絞りボケによって拡張されています
+								</span>
+							</p>
+						</div>
+					</div>
+
+					<hr />
+
+					<div class="form-group">
+						<label class="col-sm-5 control-label">被写体位置</label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<input type="number" class="form-control input-lg" placeholder="" v-model="distance">
+								<div class="input-group-addon">m</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-5 control-label">{{ distance }}mにフォーカス時の<br>被写界深度</label>
+						<div class="col-sm-7">
+							<p class="form-control-static">
+								{{ (depthOfField[0] / 1000).toFixed(2) }} m -
+								{{ (depthOfField[1] / 1000).toFixed(2) }} m
+								(
+								幅:
+								{{ ((depthOfField[1] - depthOfField[0]) / 1000).toFixed(2) }} m
+								)<br>
+								<span v-if="limitFNumber &lt; fNumber" class="label label-danger" style="">
+									<span class="glyphicon glyphicon-warning-sign" style="" aria-hidden="true"></span>
+									小絞りボケによって拡張されています
+								</span>
+							</p>
+						</div>
+					</div>
+				</form>
+
+				<h2>過焦点距離</h2>
+				<p>
+					無限遠が被写界深度のぎりぎりに入るような距離です。センサーサイズ・ピクセル数・レンズ焦点距離およびF値で決まります。
+					カメラをマニュアルフォーカスとし、過焦点距離にフォーカス点をあわせておくことで、過焦点距離の半分の距離から無限遠までピントがあう状態にできます。
+					一度設定すれば撮影のたびにピントをあわせる必要がないためスナップ撮影に便利です。
+				</p>
+
+			</section>
+
+			<div id="floating-detail" v-bind:class="{ show: showFloating }">
+				<table class="table">
+					<tr>
+						<th>カメラ名</th>
+						<td><a v-bind:href="linkToAmazon(cameraName)">{{cameraName}}</a></td>
+					</tr>
+					<tr>
+						<th>センサーサイズ</th>
+						<td>{{sensorWidth}}mm x {{sensorHeight}}mm</td>
+					</tr>
+					<tr>
+						<th>ピクセル数</th>
+						<td>{{sensorPixelWidth}}px x {{sensorPixelHeight}}px</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+		<script src="assets/js/url-search-params.js"></script>
+		<script src="lib/libphoto.js"></script>
+		<script src="sketch.js"></script>
+	</body>
+</html>

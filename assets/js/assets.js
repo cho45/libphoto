@@ -49,7 +49,15 @@ LibPhoto = {
 
 		$('#spec-sensor').text(model.sensorSize.width + 'mm x ' + model.sensorSize.height + 'mm');
 		$('#spec-pixels').text(model.pixels.width + ' x ' + model.pixels.height);
+		$('#spec-pixel-size').text(
+			(model.sensorSize.width / model.pixels.width * 1000).toFixed(2) + ' x ' +
+			(model.sensorSize.height / model.pixels.height * 1000).toFixed(2)
+			+ 'nm');
 		$('#spec-nyquist-frequency').text(~~nyquistFrequency + 'Hz/mm');
+		var pixelSize = model.sensorSize.width / model.pixels.width;
+		var limitWL = 550;
+		var limitFvalue = pixelSize / (1.22 * 0.000001 * limitWL);
+		$('#spec-rayleightlimit').text(limitFvalue.toFixed(1));
 
 		var speed  = 1 / minimunSpeedByFocalLength(50, model);
 		var factor = Math.ceil(speed / 50);

@@ -1,15 +1,30 @@
 [
     {
+        "name": "EOS 1D X Mark II",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 23.9
+        },
+        "pixelCount": 20200000
+    },
+    {
         "name": "EOS 1D X",
         "maker": "Canon",
         "sensorSize": {
             "width": 36,
             "height": 24
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 18100000
+    },
+    {
+        "name": "EOS 5D Mark IV",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 36,
+            "height": 24
+        },
+        "pixelCount": 30400000
     },
     {
         "name": "EOS 5D Mark III",
@@ -18,10 +33,7 @@
             "width": 36,
             "height": 24
         },
-        "pixels": {
-            "width": 5760,
-            "height": 3840
-        }
+        "pixelCount": 22300000
     },
     {
         "name": "EOS 5D Mark II",
@@ -30,10 +42,16 @@
             "width": 36,
             "height": 24
         },
-        "pixels": {
-            "width": 5616,
-            "height": 3744
-        }
+        "pixelCount": 21100000
+    },
+    {
+        "name": "EOS 5Ds / 5Ds R",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 36,
+            "height": 24
+        },
+        "pixelCount": 50600000
     },
     {
         "name": "EOS 6D",
@@ -42,10 +60,16 @@
             "width": 35.8,
             "height": 23.9
         },
-        "pixels": {
-            "width": 5472,
-            "height": 3648
-        }
+        "pixelCount": 20200000
+    },
+    {
+        "name": "EOS 7D Mark II",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.4,
+            "height": 15.0
+        },
+        "pixelCount": 20200000
     },
     {
         "name": "EOS 7D",
@@ -54,58 +78,97 @@
             "width": 22.3,
             "height": 14.9
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 18000000
     },
     {
-        "name": "EOS 60D",
+        "name": "EOS 80D",
         "maker": "Canon",
         "sensorSize": {
             "width": 22.3,
             "height": 14.9
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 24200000
     },
     {
-        "name": "EOS X6i",
+        "name": "EOS 8000D",
         "maker": "Canon",
         "sensorSize": {
             "width": 22.3,
             "height": 14.9
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 24200000
     },
     {
-        "name": "EOS X5",
+        "name": "EOS X8i",
         "maker": "Canon",
         "sensorSize": {
             "width": 22.3,
             "height": 14.9
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 24200000
     },
     {
-        "name": "EOS X50",
+        "name": "EOS X7i",
         "maker": "Canon",
         "sensorSize": {
-            "width": 22,
-            "height": 14.7
+            "width": 22.3,
+            "height": 14.9
         },
-        "pixels": {
-            "width": 4272,
-            "height": 2848
-        }
+        "pixelCount": 18000000
+    },
+    {
+        "name": "EOS X7",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 18000000
+    },
+    {
+        "name": "EOS X80",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 18000000
+    },
+    {
+        "name": "EOS M5",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 24200000
+    },
+    {
+        "name": "EOS M3",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 24200000
+    },
+    {
+        "name": "EOS M2",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 18000000
+    },
+    {
+        "name": "EOS M10",
+        "maker": "Canon",
+        "sensorSize": {
+            "width": 22.3,
+            "height": 14.9
+        },
+        "pixelCount": 18000000
     },
     {
         "name": "EOS M",
@@ -114,93 +177,501 @@
             "width": 22.3,
             "height": 14.9
         },
-        "pixels": {
-            "width": 5184,
-            "height": 3456
-        }
+        "pixelCount": 18000000
     },
     {
-        "name": "D4",
+        "name": "D5",
         "maker": "Nikon",
         "sensorSize": {
-            "width": 36,
+            "width": 35.9,
             "height": 23.9
         },
-        "pixels": {
-            "width": 4928,
-            "height": 3280
-        }
+        "pixelCount": 21330000
     },
     {
-        "name": "D800",
+        "name": "Df",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 36.0,
+            "height": 23.9
+        },
+        "pixelCount": 16610000
+    },
+    {
+        "name": "D810",
         "maker": "Nikon",
         "sensorSize": {
             "width": 35.9,
             "height": 24
         },
-        "pixels": {
-            "width": 7360,
-            "height": 4912
-        }
+        "pixelCount": 37090000
     },
     {
-        "name": "D600",
+        "name": "D810A",
         "maker": "Nikon",
         "sensorSize": {
             "width": 35.9,
             "height": 24
         },
-        "pixels": {
-            "width": 6016,
-            "height": 4016
-        }
+        "pixelCount": 37090000
     },
     {
-        "name": "D7000",
+        "name": "D750",
         "maker": "Nikon",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24
+        },
+        "pixelCount": 24930000
+    },
+    {
+        "name": "D610",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24
+        },
+        "pixelCount": 24660000
+    },
+    {
+        "name": "D500",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.7
+        },
+        "pixelCount": 21510000
+    },
+    {
+        "name": "D7200",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24720000
+    },
+    {
+        "name": "D5600",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24780000
+    },
+    {
+        "name": "D5500",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24780000
+    },
+    {
+        "name": "D5300",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24720000
+    },
+    {
+        "name": "D3400",
+        "maker": "Nikon",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24720000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7S II",
+        "sensorSize": {
+            "width": 35.6,
+            "height": 23.8
+        },
+        "pixelCount": 12400000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7R II",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24.0
+        },
+        "pixelCount": 43600000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7 II",
+        "sensorSize": {
+            "width": 35.8,
+            "height": 23.9
+        },
+        "pixelCount": 24700000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7S",
+        "sensorSize": {
+            "width": 35.6,
+            "height": 23.8
+        },
+        "pixelCount": 12400000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7R",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24.0
+        },
+        "pixelCount": 36800000
+    },
+    {
+        "maker": "SONY",
+        "name": "α7",
+        "sensorSize": {
+            "width": 35.8,
+            "height": 23.9
+        },
+        "pixelCount": 24700000
+    },
+    {
+        "maker": "SONY",
+        "name": "α6500",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 25000000
+    },
+    {
+        "maker": "SONY",
+        "name": "α6300",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 25000000
+    },
+    {
+        "maker": "SONY",
+        "name": "α6000",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24700000
+    },
+    {
+        "maker": "SONY",
+        "name": "α5100",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24700000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX 645Z",
+        "sensorSize": {
+            "width": 43.8,
+            "height": 32.8
+        },
+        "pixelCount": 52990000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX K-1",
+        "sensorSize": {
+            "width": 35.9,
+            "height": 24.0
+        },
+        "pixelCount": 36770000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX K-3 II",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24710000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX K-70",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 24780000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX K-S2",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 20420000
+    },
+    {
+        "maker": "Ricoh",
+        "name": "PENTAX K-S1",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.6
+        },
+        "pixelCount": 20420000
+    },
+    {
+        "maker": "SIGMA",
+        "name": "sd Quattro",
+        "sensorSize": {
+            "width": 23.4,
+            "height": 15.5
+        },
+        "pixelCount": 19671040
+    },
+    {
+        "maker": "SIGMA",
+        "name": "sd Quattro H",
+        "sensorSize": {
+            "width": 26.7,
+            "height": 17.9
+        },
+        "pixelCount": 25742400
+    },
+    {
+        "maker": "FUJIFILM",
+        "name": "X-Pro2",
         "sensorSize": {
             "width": 23.6,
             "height": 15.6
         },
-        "pixels": {
-            "width": 4928,
-            "height": 3264
-        }
+        "pixelCount": 24300000
     },
     {
-        "maker": "Nikon",
-        "name": "D5100",
+        "maker": "FUJIFILM",
+        "name": "X-T2",
         "sensorSize": {
             "width": 23.6,
             "height": 15.6
         },
-        "pixels": {
-            "width": 4928,
-            "height": 3264
-        }
+        "pixelCount": 24300000
     },
     {
-        "maker": "Nikon",
-        "name": "D3200",
+        "maker": "FUJIFILM",
+        "name": "X-T1",
         "sensorSize": {
-            "width": 23.2,
-            "height": 15.4
+            "width": 23.6,
+            "height": 15.6
         },
-        "pixels": {
-            "width": 6016,
-            "height": 4000
-        }
+        "pixelCount": 16300000
     },
     {
-        "maker": "Nikon",
-        "name": "D3100",
+        "maker": "FUJIFILM",
+        "name": "X-T10",
         "sensorSize": {
-            "width": 23.1,
-            "height": 15.4
+            "width": 23.6,
+            "height": 15.6
         },
-        "pixels": {
-            "width": 4608,
-            "height": 3072
-        }
+        "pixelCount": 16300000
+    },
+    {
+        "maker": "FUJIFILM",
+        "name": "X-E2",
+        "sensorSize": {
+            "width": 23.6,
+            "height": 15.6
+        },
+        "pixelCount": 16300000
+    },
+    {
+        "maker": "FUJIFILM",
+        "name": "X-A3",
+        "sensorSize": {
+            "width": 23.5,
+            "height": 15.7
+        },
+        "pixelCount": 24200000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-GH4",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 17200000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-GX8",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 21770000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-GX7MK2",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-GM5",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-GM1S",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-G8",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DMC-G7",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DC-GF9",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Panasonic",
+        "name": "LUMIX DC-GF7",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16840000
+    },
+    {
+        "maker": "Olympus",
+        "name": "OM-D E-M1 Mark II",
+        "sensorSize": {
+            "width": 17.4,
+            "height": 13.0
+        },
+        "pixelCount": 21770000
+    },
+    {
+        "maker": "Olympus",
+        "name": "OM-D E-M1",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 16850000
+    },
+    {
+        "maker": "Olympus",
+        "name": "OM-D E-M5 Mark II",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 17200000
+    },
+    {
+        "maker": "Olympus",
+        "name": "OM-D E-M10 Mark II",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 17200000
+    },
+    {
+        "maker": "Olympus",
+        "name": "PEN-F",
+        "sensorSize": {
+            "width": 17.4,
+            "height": 13.0
+        },
+        "pixelCount": 21770000
+    },
+    {
+        "maker": "Olympus",
+        "name": "PEN E-PL8",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 17200000
+    },
+    {
+        "maker": "Olympus",
+        "name": "PEN E-PL7",
+        "sensorSize": {
+            "width": 17.3,
+            "height": 13.0
+        },
+        "pixelCount": 17200000
+    },
+    {
+        "maker": "Hasselblad",
+        "name": "X1D-50c",
+        "sensorSize": {
+            "width": 43.8,
+            "height": 32.9
+        },
+        "pixelCount": 51286400
+    },
+    {
+        "maker": "Hasselblad",
+        "name": "H6D-100c",
+        "sensorSize": {
+            "width": 53.4,
+            "height": 40.0
+        },
+        "pixelCount": 100920000
+    },
+    {
+        "maker": "Hasselblad",
+        "name": "H6D-50c",
+        "sensorSize": {
+            "width": 43.8,
+            "height": 32.9
+        },
+        "pixelCount": 51286400
     }
 ]
